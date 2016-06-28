@@ -1,15 +1,32 @@
 
+const _ = require('lodash');
 
+//@todo put in config file
 const POWER_SUPPLIES = {
 	PDS60Ca: { 
 		hexOne: "0401dc4a01000801000000000000000002ef00000002f0ff",
 		hexTwo: "0401dc4a010008010000000000000000011b00000002f0ff"
 };
 
-function pattern() => {
 
+function PDSca(network, endPoint, initalHexs, lightType) {
 
+	this.network = network;
+	this.endPoint = endPoint;
+	this.ports = [];
+	this.intialHex = initalHexs;
+
+	_.each(initalHexs, (hex) => {
+
+	})
+}
+
+PDSca.prototype.setColorData = (lightTypes) => {
 
 }
+ 
+
+
+
 
 module.exports = pattern;
