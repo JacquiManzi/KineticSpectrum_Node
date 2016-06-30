@@ -1,18 +1,9 @@
 
-/*
-1. create a new network
-2. call RetrieveNetworkCards
-3. call SetInterface("Ethernet")
-4. call network.BroadCast();
-*/
-
 const _ = require('lodash');
+const os = require('os');
+const net = require('net');
 
 function Network() {
-
-	const BUFFER_SIZE = 1024;
-	//public readonly Socket Socket;
-	//public byte[] Buffer = new byte[BUFFER_SIZE];
 
 	this.localPort;
 	this.localIPAddress;
@@ -22,7 +13,6 @@ function Network() {
 	this._pdss = [];
 
 	//readonly IPEndPoint _ipEndPoint = new IPEndPoint(IPAddress.Any, 55350);
-	//private readonly Socket _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
 	/*_pdss.Add(new PDS480Ca(this, new IPEndPoint(IPAddress.Parse("169.254.49.150"), 6038)));
     _pdss.Add(new PDS480Ca(this, new IPEndPoint(IPAddress.Parse("169.254.49.151"), 6038)));
@@ -44,9 +34,7 @@ function Network() {
  */
 
 Network.prototype.retrieveNetworkCards = () => {
-
-	//let adapters = NetworkInterface.GetAllNetworkInterfaces();
-	return adapters
+	return os.networkInterfaces();
 };
 
 Network.prototype.setInterface = (networkInterface) => {
@@ -93,10 +81,16 @@ Network.prototype.initializeLocalIP = () => {
  */
 Network.prototype.InitializeLocalPort = () => {
 
- 	//TcpListener listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 0);
-    //listener.Start();
-    //this.localPort = ((IPEndPoint)listener.LocalEndpoint).Port;
-    //listener.stop();
+ 	net.listen({
+ 		port: 0,
+ 		host: "127.0.0.0.1"
+ 	}, () => {
+ 		let address = net.address();
+ 		console.log('opened server on %j', address);
+
+ 		this.localPort = net.port(); // not sure if this is valid
+ 		net.close();
+ 	})
 
     return this.localPort;
 };
