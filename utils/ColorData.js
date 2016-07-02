@@ -17,3 +17,5 @@ function ColorData(pds, initialData, lightType, initial) {
         //led.Color = Colors.Black;
     }
 };
+
+module.exports = ColorData;

@@ -1,31 +1,35 @@
 
 const _ = require('lodash');
+const HexString = require('./HexString');
 
 function PDS60ca(network, endPoint, initalHexs, lightType) {
 
+    this.colorData = [];
     this.network = network;
     this.ports = [];
     this.initialHexs = [];
     this.endPoint = endPoint;
 
-    foreach (var initialHex in this.initialHexs)
-    {
-        const hexBytes = HexStrings.DecodeString(initialHex);
+    _.each(this.initialHexs, (initialHex) => {
+
+        const hexBytes = HexString.decodeString(initialHex);
         this.ports.push(new ColorData(this, hexBytes, lightType));
-    }
+    });
 
 }; 
 
-PDS60ca.prototype.SetColorData = (lightTypes) => {
+PDS60ca.prototype.setColorData = function setColorData(lightTypes) {
 
     //var rebuild = new Func<String, LightType, ColorData>((initHex, type) =>
                                    //new ColorData(this, HexStrings.DecodeString(initHex), type));
     //_ports = new List<ColorData>(Enumerable.Zip(_initialHexs, lightTypes, rebuild));
 };
 
-PDS60ca.prototype.updateSystem = () => {
+PDS60ca.prototype.updateSystem = function updateSystem() {
 
     _.each(this.ports, (port) => {
         this.network.sendUpdate(this.endPoint, port);
     });
 };
+
+module.exports = PDS60ca;

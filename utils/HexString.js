@@ -73,47 +73,51 @@ function HexString() {
                             "000000000000000000000000000000000000000000000000000000";
 }
 
-HextString.prototype.fullSearch = () => {
+HexString.prototype.fullSearch = function fullSearch() {
 	return this.decodeString(_fullSearch);
 }
 
-HexString.prototype.partialSearch = () => {
+HexString.prototype.partialSearch = function partialSearch() {
 	return this.decodeString(_partialSearch);
 }
 
-HexString.prototype.psSearch = () => {
+HexString.prototype.psSearch = function psSearch() {
 	return this.decodeString(PS_SEARCH);
 }
 
-HexString.prototype.dataOne = () => {
+HexString.prototype.dataOne = function dataOne() {
 	return this.decodeString(_findOne);
 } 
 
-HexString.prototype.dataTwo = () => {
+HexString.prototype.dataTwo = function dataTwo() {
 	return this.ecodeString(_findTwo);
 }
 
-HexString.prototype.dataThree = () => {
+HexString.prototype.dataThree = function dataThree() {
 	return this.decodeString(_findThree);
 }
 
-HexString.prototype.dataFour = () => {
+HexString.prototype.dataFour = function dataFour() {
 	return this.decodeString(_findFour);
 }
 
-HexString.prototype.addressOff = () => {
+HexString.prototype.addressOff = function addressOff() {
 	return this.decodeString(addressOff);
 }
 
-HexString.prototype.encodeBytes = () => {
+HexString.prototype.encodeBytes = function encodeBytes(bytes) {
+
+	//return bytes.
 	//return BitConverter.ToString(bytes).Replace("-", String.Empty);
 }
 
-HexString.prototype.decodeString(hexString) = () => {
+HexString.prototype.decodeString = function decodeString(hexString) {
         
     let hexBytes = hexString.length / 2;
-    for (int i = 0; i < hexString.length / 2; i++){
+    for (let i = 0; i < hexString.length / 2; i++){
         //hexBytes[i] = Byte.Parse(hexString.Substring(i * 2, 2).ToUpper(), NumberStyles.AllowHexSpecifier);
     }
     return hexBytes;
 }
+
+module.exports = HexString;

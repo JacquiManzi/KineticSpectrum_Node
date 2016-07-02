@@ -2,6 +2,7 @@
 const _ = require('lodash');
 const os = require('os');
 const net = require('net');
+const PDSca = require('./PDSca');
 
 function Network() {
 
@@ -10,7 +11,9 @@ function Network() {
 	this.networkCardList = [];
 	this._bindedNetworkCard;
 	this.connected = false;
-	this._pdss = [];
+	this._pdss = [
+	{ip: "169.254.49.153", port: 6038}
+	];
 
 	//readonly IPEndPoint _ipEndPoint = new IPEndPoint(IPAddress.Any, 55350);
 
@@ -33,13 +36,13 @@ function Network() {
  * Retrieve a list of all the Network Interfaces on your system
  */
 
-Network.prototype.retrieveNetworkCards = () => {
+Network.prototype.retrieveNetworkCards = function retrieveNetworkCards() {
 	return os.networkInterfaces();
 };
 
-Network.prototype.setInterface = (networkInterface) => {
+Network.prototype.setInterface = function setInterface(networkInterface) {
 
-	if (_networkCardList.length === 0) {
+	if (this.networkCardList.length === 0) {
 		this.retrieveNetworkCards();
 	}
 
@@ -61,7 +64,7 @@ Network.prototype.setInterface = (networkInterface) => {
 /*
  * Retrieve your local IP Address for your default network interface
  */
-Network.prototype.initializeLocalIP = () => {
+Network.prototype.initializeLocalIP = function initializeLocalIP() {
 
 	_.each(this._bindedNetworkCard.getIPProperties().unicastAddresses, (unicastAddress) => {
 	
@@ -79,7 +82,7 @@ Network.prototype.initializeLocalIP = () => {
 /*
  * Initialize your the local port to communicate over
  */
-Network.prototype.InitializeLocalPort = () => {
+Network.prototype.initializeLocalPort = function initializeLocalPort() {
 
  	net.listen({
  		port: 0,
@@ -94,3 +97,5 @@ Network.prototype.InitializeLocalPort = () => {
 
     return this.localPort;
 };
+
+module.exports = Network;

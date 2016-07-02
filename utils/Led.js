@@ -11,7 +11,7 @@ function Led(bytes, initialLength, position) {
 
 };
 
-Led.prototype.setColor = () => {
+Led.prototype.setColor = function setColor() {
 
     if (this.initialLength + this.position * 3 > this.byteArr.length) {
         throw new Error();
@@ -21,7 +21,7 @@ Led.prototype.setColor = () => {
     this.byteArr[this.initialLength + this.position * 3 + 2] = (this.adjustBrightness(value.B));
 }
 
-Led.prototype.getColor = () => {
+Led.prototype.getColor = function getColor() {
 
     if (this.initialLength + this.position * 3 >= this.byteArr.length) {
         throw new Error();
@@ -34,7 +34,7 @@ Led.prototype.getColor = () => {
     }
 }
 
-Led.prototype.reverseBrightness = (byteValue) => {
+Led.prototype.reverseBrightness = function reverseBrightness(byteValue) {
 
     if (this.brightness == 0) {
         return 0;
@@ -44,8 +44,10 @@ Led.prototype.reverseBrightness = (byteValue) => {
     return Math.Max(0, Math.Min(newValue, 255));
 }
 
-Led.prototype.adjustBrightness = (byteValue) => {
+Led.prototype.adjustBrightness = function adjustBrightness(byteValue) {
 
     newValue = (byteValue * this.brightness);
     return Math.Max(0, Math.Min(newValue, 255));
 }
+
+module.exports = Led;
