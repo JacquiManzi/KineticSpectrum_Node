@@ -5,7 +5,7 @@ const TEST_COUNT = 50;
 const network = new Network();
 
 network.retrieveNetworkCards();
-network.setInterface("Ethernet");
+network.setInterface("lo0");
 
 /*for (let i = 0; i < TEST_COUNT; i++) {
 

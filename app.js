@@ -58,7 +58,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-run_test();
-
-
 module.exports = app;

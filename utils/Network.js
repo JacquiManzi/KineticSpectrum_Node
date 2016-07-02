@@ -43,22 +43,25 @@ Network.prototype.retrieveNetworkCards = function retrieveNetworkCards() {
 Network.prototype.setInterface = function setInterface(networkInterface) {
 
 	if (this.networkCardList.length === 0) {
-		this.retrieveNetworkCards();
+		this.networkCardList = this.retrieveNetworkCards();
 	}
 
-	this.connected = false;
-
-	_.each(this.networkCardList, (networkCard) => {
-
-		if (networkCard.name === this.networkInterface) {
+	//this.connected = false;
+	this.networkCard = this.networkCardList.en0[1];
+	this.initializeLocalIP();
+	this.initializeLocalPort();
+	this.connected = true;
+	/*_.each(this.networkCardList, (networkCard) => {
+		
+		if (Object.keys(networkCard)[0] === networkInterface) {
 			this.networkCard = networkCard;
 			this.initializeLocalIP();
 			this.InitializeLocalPort();
 			this.connected = true;
 		}
-	});
+	});*/
 
-	throw new Error("Specified network interface '" + this.networkInterface + "' doesn't exist.");
+	//throw new Error("Specified network interface '" + this.networkInterface + "' doesn't exist.");
 };
 
 /*
@@ -66,7 +69,10 @@ Network.prototype.setInterface = function setInterface(networkInterface) {
  */
 Network.prototype.initializeLocalIP = function initializeLocalIP() {
 
-	_.each(this._bindedNetworkCard.getIPProperties().unicastAddresses, (unicastAddress) => {
+	console.log(this.networkCard)
+	this.localIPAddress = this.networkCard.address;
+
+	/*_.each(this._bindedNetworkCard.getIPProperties().unicastAddresses, (unicastAddress) => {
 	
 		if (unicastAddress.address.addressFamily === addressFamily.InterNetwork) {
 
@@ -76,7 +82,7 @@ Network.prototype.initializeLocalIP = function initializeLocalIP() {
 
 	throw new Error("Specified network card has no IPv4 IP Address...");		
 
-	});
+	});*/
 };
 
 /*
@@ -84,15 +90,23 @@ Network.prototype.initializeLocalIP = function initializeLocalIP() {
  */
 Network.prototype.initializeLocalPort = function initializeLocalPort() {
 
- 	net.listen({
+	var server = net.createServer((socket) => {
+  		socket.end('goodbye\n');
+	}).on('error', (err) => {
+  	// handle errors here
+  	throw err;
+	});
+
+
+ 	server.listen({
  		port: 0,
  		host: "127.0.0.0.1"
  	}, () => {
- 		let address = net.address();
+ 		let address = server.address();
  		console.log('opened server on %j', address);
 
- 		this.localPort = net.port(); // not sure if this is valid
- 		net.close();
+ 		this.localPort = server.port(); // not sure if this is valid
+ 		server.close();
  	})
 
     return this.localPort;
