@@ -1,6 +1,6 @@
 
 let white = '#ffffff';  // white
-let black = '#000000';  // black
+
 
 let blues = ['#0000ff', // blue
 			 '#66CCCC', // aqua
@@ -83,7 +83,17 @@ let pinks = ['#FF1493', // deep pink
 			 '#EE82EE' // violet
 			 ];
 
-let purples = ['#8a2be2', // blue violet
+
+let allColors = blues
+					.concat(reds)
+					.concat(greens)
+					.concat(yellows)
+					.concat(purples())
+					.concat(oranges)
+					.concat(pinks);
+
+function purples() {
+	return ['#8a2be2', // blue violet
 			   '#8B008B', // dark magenta
 			   '#9932cc', // dark orchid
 			   '#483D8B', // dark slate blue
@@ -94,12 +104,25 @@ let purples = ['#8a2be2', // blue violet
 			   '#9370DB', // medium purple
 			   '#6A5ACD' // slate blue
 			  ];
+}
 
+function convertColor(hex) {
 
-let allColors = blues
-					.concat(reds)
-					.concat(greens)
-					.concat(yellows)
-					.concat(purples)
-					.concat(oranges)
-					.concat(pinks);
+}
+
+function black() {
+	return '#000000'
+}
+
+exports.purples = purples;
+exports.black = black;
+exports.allColors = allColors;
+exports.pinks = pinks;
+exports.reds = reds;
+exports.blues = blues;
+exports.greens = greens;
+//module.exports = greens;
+//module.exports = yellows;
+//module.exports = blues;
+//module.exports = white;
+//module.exports = oranges;
